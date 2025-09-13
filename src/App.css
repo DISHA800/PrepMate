@@ -1,0 +1,98 @@
+/* background theme */
+:root {
+  --bg: #eaf2fb; /* soft professional blue */
+  --primary: #3498db;
+  --primary-2: #6C63FF;
+  --muted: #444; /* darker so it's visible */
+}
+
+* { box-sizing: border-box; }
+html, body, #root { height: 100%; margin: 0; }
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: var(--bg);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: #0f0f0f;
+}
+
+/* center content vertically & horizontally */
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  text-align: center;
+  padding: 20px;
+}
+
+/* PrepMate title */
+.logo-text {
+  font-size: 2.5rem;
+  font-weight: 700;
+
+  /* gradient text */
+  background: linear-gradient(90deg, #2b8cff, #6C63FF);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+
+  /* fallback color */
+  color: #2b3742;
+  margin-bottom: 12px;
+}
+
+/* subtitle */
+.subtitle {
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: var(--muted);
+  margin-bottom: 24px;
+}
+
+/* button row */
+.auth-actions {
+  display: flex;
+  gap: 14px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* solid button */
+.get-started-btn {
+  background: linear-gradient(90deg, var(--primary), var(--primary-2));
+  color: white;
+  border: none;
+  padding: 12px 26px;
+  font-size: 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  box-shadow: 0 6px 18px rgba(50, 80, 170, 0.12);
+  text-decoration: none;
+  transition: all 0.15s ease;
+}
+
+.get-started-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 26px rgba(50, 80, 170, 0.18);
+}
+
+/* outline button */
+.outline-btn {
+  border: 1px solid #2b8cff;
+  padding: 12px 26px;
+  border-radius: 8px;
+  background: transparent;
+  color: #2b3742;
+  font-size: 1rem;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.outline-btn:hover {
+  background: #2b8cff;
+  color: white;
+}
