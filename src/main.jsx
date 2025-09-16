@@ -6,6 +6,7 @@ import AuthHome from "./AuthHome";
 import Login from "./Login";
 import Signup from "./Signup";
 import "./App.css";
+import Dashboard from "./Dashboard";
 
 const router = createBrowserRouter([
   {
@@ -24,6 +25,11 @@ const router = createBrowserRouter([
     path: "/signup",
     element: <Signup />,
   },
+  {
+    path:"/dashboard",
+    element:<Dashboard />,
+  }
+
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(

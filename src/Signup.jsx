@@ -1,7 +1,9 @@
 import React, { useState } from "react";
-import { createUserWithEmailAndPassword, sendEmailVerification } from "firebase/auth";
 import { auth } from "./firebase";
-import { Link, useNavigate } from "react-router-dom";
+import { createUserWithEmailAndPassword, sendEmailVerification } from "firebase/auth";
+import { Link } from "react-router-dom";
+import { getAuthErrorMessage } from "./authErrors";
+import { useNavigate } from "react-router-dom";
 
 export default function Signup() {
   const [email, setEmail] = useState("");
@@ -12,25 +14,33 @@ export default function Signup() {
   const handleSignup = async (e) => {
     e.preventDefault();
     try {
-      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-      const user = userCredential.user;
+      await sendEmailVerification(userCredential.user);
+      setSuccess(true);
+      setMessage("Verification email sent. Please check your inbox.");
 
-      // ✅ send verification email
-      await sendEmailVerification(user);
-      setMessage("Verification email sent! Please check your inbox.");
+      setTimeout(() => {
+        navigate("/login");
+      }, 3000);
 
-      // Optionally: don't navigate immediately — wait for verification
-      // navigate("/");
     } catch (error) {
-      console.error(error.message);
-      setMessage(error.message);
+      setSuccess(false);
+      setMessage(getAuthErrorMessage(error.code));
+    }
+  };
+
+  // ✅ Check if the user is verified
+  const checkVerification = async () => {
+    await auth.currentUser.reload(); // refresh user state
+    if (auth.currentUser.emailVerified) {
+      setMessage("Email verified! Now you can login.");
+    } else {
+      setMessage("Email not verified yet. Please check your inbox.");
     }
   };
 
   return (
     <div className="container">
-      <h1 className="logo-text">PrepMate</h1>
-      <p className="subtitle">Create your account and get started</p>
+      <h2>Sign Up</h2>
 
       <form onSubmit={handleSignup} className="form-box">
         <input
@@ -54,10 +64,16 @@ export default function Signup() {
         </button>
       </form>
 
-      {message && <p className="subtitle small">{message}</p>}
+      {message && <p className="subtitle">{message}</p>}
 
+      {/* ✅ Button to check verification status */}
+      <button onClick={checkVerification} className="outline-btn" style={{ marginTop: "10px" }}>
+        Check Verification
+      </button>
+
+      {/* ✅ Link to login page if verified */}
       <p className="subtitle small">
-        Already have an account? <Link to="/login">Login here</Link>
+        Already verified? <Link to="/login">Login here</Link>
       </p>
     </div>
   );
